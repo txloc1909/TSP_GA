@@ -72,6 +72,7 @@ public class Population {
         Random rand = new Random();
         double prob = rand.nextDouble();
 
+        // using binary search to find the individual
         int left = 0, right = rouletteWheel.size() - 1;
         while (true) {
             int mid = left + (right - left) / 2;
@@ -99,13 +100,17 @@ public class Population {
          * Using roulette selection
          */
 
+        // initialize new empty population
         Population newPop = new Population(popSize, this.geneSize, false);
 
+        // make sure the fittest individual is always chosen
         newPop.individuals.add(this.bestIndividual);
+
         this.calculatePopFitness(weightMatrix);
         buildRouletteWheel();
 
-        for (int i = 0; i < popSize; i++) {
+        // select a new population with same popSize from the roulette wheel
+        while(newPop.getCurrentSize() < popSize) {
             TSPIndividual ind = rollRoulette();
             if (ind != null) {
                 newPop.individuals.add(ind);
