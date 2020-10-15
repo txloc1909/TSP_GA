@@ -113,13 +113,19 @@ public class TSPIndividual {
          * Swap 2 random alleles in the genotype
          */
         Random rand = new Random();
-        int swapPoint1 = rand.nextInt(individual.geneSize);
-        int swapPoint2 = rand.nextInt(individual.geneSize);
+        int swapPoint1, swapPoint2;
+        do {
+            swapPoint1 = rand.nextInt(individual.geneSize);
+            swapPoint2 = rand.nextInt(individual.geneSize);
+        } while (swapPoint1 == swapPoint2); // make sure 2 swap points are different
+
+
         TSPIndividual output = individual.copy();
 
-        int tmp = individual.genotype.get(swapPoint1);
-        individual.genotype.set(swapPoint1, individual.genotype.get(swapPoint2));
-        individual.genotype.set(swapPoint2, tmp);
+        // swapping
+        int tmp = output.genotype.get(swapPoint1);
+        output.genotype.set(swapPoint1, output.genotype.get(swapPoint2));
+        output.genotype.set(swapPoint2, tmp);
 
         return output;
     }
